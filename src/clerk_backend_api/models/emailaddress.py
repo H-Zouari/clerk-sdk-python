@@ -74,7 +74,7 @@ class OauthTypedDict(TypedDict):
 class Oauth(BaseModel):
     status: OauthVerificationStatus
     strategy: OauthVerificationStrategy
-    expire_at: int
+    expire_at: Nullable[int]
     external_verification_redirect_url: Optional[str] = None
     error: OptionalNullable[Error] = UNSET
     attempts: OptionalNullable[int] = UNSET
@@ -114,14 +114,14 @@ class VerificationStrategy(str, Enum):
 
 class AdminTypedDict(TypedDict):
     status: AdminVerificationStatus
-    strategy: VerificationStrategy
+    strategy: Strategy
     attempts: NotRequired[Nullable[int]]
     expire_at: NotRequired[Nullable[int]]
     
 
 class Admin(BaseModel):
     status: AdminVerificationStatus
-    strategy: VerificationStrategy
+    strategy: Strategy
     attempts: OptionalNullable[int] = UNSET
     expire_at: OptionalNullable[int] = UNSET
     
@@ -171,15 +171,15 @@ class Strategy(str, Enum):
 class OtpTypedDict(TypedDict):
     status: VerificationStatus
     strategy: Strategy
-    attempts: int
-    expire_at: int
+    attempts: NotRequired[Nullable[int]]
+    expire_at: NotRequired[Nullable[int]]
     
 
 class Otp(BaseModel):
     status: VerificationStatus
     strategy: Strategy
-    attempts: int
-    expire_at: int
+    attempts: Nullable[int]
+    expire_at: Nullable[int]
     
 
 VerificationTypedDict = Union[OtpTypedDict, AdminTypedDict, OauthTypedDict]
